@@ -1,0 +1,250 @@
+/* Motion v2: deliberately visible, loaded after the legacy cascade. */
+
+body.motion-rich .page-progress {
+  height: 4px;
+  background: linear-gradient(90deg, #ffb184 0%, #f26522 48%, #ff6b22 100%);
+  box-shadow: 0 0 18px rgba(242, 101, 34, .8);
+}
+
+/* Choreographed hero opening. */
+body.motion-rich .hero-content.reveal-visible > * {
+  animation: hero-stage-in 1.1s cubic-bezier(.16, 1, .3, 1) both;
+}
+
+body.motion-rich .hero-content.reveal-visible > :nth-child(1) { animation-delay: .08s; }
+body.motion-rich .hero-content.reveal-visible > :nth-child(2) { animation-delay: .16s; }
+body.motion-rich .hero-content.reveal-visible > :nth-child(3) { animation-delay: .28s; }
+body.motion-rich .hero-content.reveal-visible > :nth-child(4) { animation-delay: .38s; }
+body.motion-rich .hero-content.reveal-visible > :nth-child(5) { animation-delay: .5s; }
+
+@keyframes hero-stage-in {
+  0% { opacity: 0; transform: translate3d(0, 58px, 0) scale(.94); filter: blur(12px); }
+  55% { opacity: 1; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}
+
+/* The background and the content leave the hero at clearly different speeds. */
+@media (min-width: 721px) {
+  body.motion-rich .hero-section {
+    background-position: center calc(50% + var(--hero-bg-shift, 0px));
+  }
+
+  body.motion-rich .hero-content {
+    translate: 0 var(--hero-content-shift, 0px);
+  }
+
+  body.motion-rich .hero-content > .hero-title { translate: 0 var(--hero-title-shift, 0px); }
+  body.motion-rich .hero-content > .hero-stats { translate: 0 var(--hero-stats-shift, 0px); }
+}
+
+/* Scroll-scrubbed cards: movement continues while the user scrolls. */
+body.motion-rich :is(.pillar-card, #como-funciona .step-item, #entrega .checklist-item) {
+  translate: var(--kinetic-x, 0px) var(--kinetic-y, 0px);
+  rotate: var(--kinetic-r, 0deg);
+  transition:
+    translate .14s linear,
+    rotate .14s linear,
+    transform .65s cubic-bezier(.16, 1, .3, 1),
+    box-shadow .55s ease,
+    border-color .45s ease,
+    filter .45s ease;
+  will-change: translate, rotate, transform;
+}
+
+body.motion-rich .reveal.reveal-visible .pillar-card:hover {
+  opacity: 1;
+  visibility: visible;
+  filter: none;
+  translate: var(--kinetic-x, 0px) calc(var(--kinetic-y, 0px) - 14px);
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.025);
+}
+
+/* Kinetic section headings — the text and body no longer travel as one layer. */
+body.motion-rich .section > .container.reveal-visible .section-title,
+body.motion-rich .final-cta > .container.reveal-visible .final-cta-title {
+  translate: 0 var(--section-shift, 0px);
+  transition: translate .14s linear;
+}
+
+/* An unmistakable active-state sequence in section 03. */
+body.motion-rich #como-funciona .steps-list::before {
+  display: block;
+  opacity: 1;
+  height: 3px;
+  top: -26px;
+  background: linear-gradient(90deg, #f26522, #ff9b67 52%, rgba(242,101,34,.12));
+  box-shadow: 0 0 24px rgba(242,101,34,.38);
+}
+
+body.motion-rich #como-funciona .step-item {
+  filter: saturate(.55) brightness(.97);
+}
+
+body.motion-rich #como-funciona .step-item.is-current {
+  filter: saturate(1) brightness(1);
+  transform: translateY(-16px) scale(1.035);
+  border-color: rgba(242,101,34,.45);
+  box-shadow: 0 36px 82px rgba(82,47,23,.18), 0 0 0 1px rgba(242,101,34,.08);
+}
+
+body.motion-rich #como-funciona .step-item.is-current .step-badge {
+  color: #fff;
+  background: #f26522;
+  transform: rotate(-8deg) scale(1.16);
+  box-shadow: 0 0 0 10px rgba(242,101,34,.12), 0 14px 34px rgba(242,101,34,.35);
+}
+
+/* The orange strip visibly accelerates and tilts with scroll direction. */
+body.motion-rich .brand-marquee {
+  transform: rotate(calc(-1deg + var(--scroll-skew, 0deg))) scale(1.035);
+  transition: transform .16s linear, box-shadow .35s ease;
+  box-shadow: 0 22px 48px rgba(242,101,34,.32);
+}
+
+body.motion-rich .marquee-track { translate: var(--marquee-shift, 0px) 0; }
+
+/* Cursor lights are strong enough to be perceived without harming contrast. */
+body.motion-rich .cursor-ambient {
+  width: clamp(480px, 55vw, 920px);
+  opacity: .56;
+  background: radial-gradient(circle, rgba(242,101,34,.2), rgba(242,101,34,.07) 38%, transparent 70%);
+  filter: blur(44px);
+}
+
+body.motion-rich :is(.dark-continuum, .closing-continuum):hover .cursor-ambient { opacity: .88; }
+
+body.motion-rich #entrega .checklist-item:hover {
+  translate: calc(var(--kinetic-x, 0px) + 12px) var(--kinetic-y, 0px);
+}
+
+body.motion-rich #entrega .checklist-item:hover svg {
+  transform: rotate(-14deg) scale(1.2);
+  box-shadow: 0 0 28px rgba(242,101,34,.32);
+}
+
+body.motion-rich #diagnostico .diagnostic-card:hover {
+  transform: perspective(1100px) translateY(-10px) rotateX(var(--tilt-x-soft, 0deg)) rotateY(var(--tilt-y-soft, 0deg)) scale(1.012);
+  box-shadow: 0 58px 130px rgba(0,0,0,.62), 0 0 0 1px rgba(242,101,34,.16);
+}
+
+body.motion-rich .btn:hover {
+  transform: translate3d(var(--magnetic-x, 0), var(--magnetic-y, 0), 0) scale(1.035);
+}
+
+/* Closing words cross each other at different speeds. */
+body.motion-rich .final-cta-title > span {
+  translate: 0 var(--word-y, 0px);
+  rotate: var(--word-r, 0deg);
+  transition: translate .14s linear, rotate .14s linear, color .45s ease, text-shadow .45s ease;
+}
+
+body.motion-rich .final-cta .cta-logo {
+  animation: final-logo-orbit 5s ease-in-out infinite;
+}
+
+@keyframes final-logo-orbit {
+  0%, 100% { translate: 0 0; rotate: -4deg; transform: scale(1); }
+  35% { translate: -7px -14px; rotate: 2deg; transform: scale(1.05); }
+  70% { translate: 8px -8px; rotate: 5deg; transform: scale(.98); }
+}
+
+@media (max-width: 720px) {
+  body.motion-rich .page-progress { height: 3px; }
+
+  body.motion-rich #como-funciona .steps-list {
+    box-sizing: border-box;
+    padding-left: 20px !important;
+    overflow: visible;
+  }
+
+  body.motion-rich :is(.pillar-card, #como-funciona .step-item, #entrega .checklist-item),
+  body.motion-rich .section > .container.reveal-visible .section-title,
+  body.motion-rich .final-cta > .container.reveal-visible .final-cta-title,
+  body.motion-rich .final-cta-title > span {
+    translate: none;
+    rotate: none;
+  }
+
+  body.motion-rich #como-funciona .steps-list::before {
+    left: 4px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    top: 12px;
+    bottom: 12px;
+    transform-origin: top center;
+    box-shadow: 0 0 14px rgba(242,101,34,.3);
+  }
+
+  body.motion-rich #como-funciona .step-item.is-current { transform: translateY(-7px) scale(1.015); }
+  body.motion-rich .cursor-ambient { display: none; }
+  body.motion-rich .btn:hover { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.motion-rich .page-progress,
+  body.motion-rich .cursor-ambient,
+  body.motion-rich #como-funciona .steps-list::before { display: none; }
+
+  body.motion-rich .hero-content.reveal-visible > *,
+  body.motion-rich .final-cta .cta-logo { animation: none; }
+
+  body.motion-rich :is(.pillar-card, #como-funciona .step-item, #entrega .checklist-item),
+  body.motion-rich .hero-content,
+  body.motion-rich .hero-content > *,
+  body.motion-rich .section-title,
+  body.motion-rich .final-cta-title,
+  body.motion-rich .final-cta-title > span {
+    opacity: 1;
+    translate: none;
+    rotate: none;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Pillar hover stability: entrance and pointer states must never fight each other. */
+body.motion-rich #pilares .reveal.reveal-visible .pillar-card,
+body.motion-rich #pilares .reveal.reveal-visible .pillar-card:hover {
+  animation: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+}
+
+body.motion-rich #pilares .reveal.reveal-visible .pillar-card:not(:hover) {
+  transform: none;
+}
+
+body.motion-rich #pilares .pillar-card {
+  transition:
+    translate .28s cubic-bezier(.22, 1, .36, 1),
+    rotate .28s cubic-bezier(.22, 1, .36, 1),
+    transform .95s cubic-bezier(.16, 1, .3, 1),
+    box-shadow .95s cubic-bezier(.16, 1, .3, 1),
+    border-color .8s ease,
+    background-color .8s ease !important;
+}
+
+body.motion-rich #pilares .reveal.reveal-visible .pillar-card:hover {
+  translate: var(--kinetic-x, 0px) var(--kinetic-y, 0px);
+  transform: perspective(1100px) translateY(-11px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.018);
+  box-shadow: 0 30px 72px rgba(57,39,25,.14), inset 0 1px 0 rgba(255,255,255,.96);
+}
+
+body.motion-rich #pilares .pillar-card::before,
+body.motion-rich #pilares .pillar-card::after,
+body.motion-rich #pilares .pillar-card :is(.pillar-icon, .pillar-title, .pillar-desc),
+body.motion-rich #pilares .pillar-card .pillar-icon svg {
+  transition-duration: 1s !important;
+  transition-timing-function: cubic-bezier(.16, 1, .3, 1) !important;
+}
+
+@media (max-width: 720px), (prefers-reduced-motion: reduce) {
+  body.motion-rich #pilares .pillar-card,
+  body.motion-rich #pilares .reveal.reveal-visible .pillar-card:hover {
+    translate: none;
+    rotate: none;
+    transform: none;
+  }
+}
