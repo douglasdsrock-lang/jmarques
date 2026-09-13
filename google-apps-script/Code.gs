@@ -172,7 +172,7 @@ function sendLeadEmails(lead) {
     SENDER_NAME
   ].join('\n');
 
-  MailApp.sendEmail(lead.email, clientSubject, clientText);
+  GmailApp.sendEmail(lead.email, clientSubject, clientText);
 }
 
 function emailField(label, value) {
@@ -194,6 +194,10 @@ function escapeHtml(value) {
 function safeCell(value) {
   const text = String(value == null ? '' : value);
   return /^[=+\-@]/.test(text) ? `'${text}` : text;
+}
+
+function authorizeGmailAccess() {
+  GmailApp.getAliases();
 }
 
 function jsonResponse(payload) {
