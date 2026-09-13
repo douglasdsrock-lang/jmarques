@@ -172,29 +172,7 @@ function sendLeadEmails(lead) {
     SENDER_NAME
   ].join('\n');
 
-  const clientHtml = `
-    <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#262321;line-height:1.65">
-      <div style="padding:34px;background:#111113;border-radius:20px;color:#fff">
-        <div style="color:#f26522;font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase">Tudo certo</div>
-        <h1 style="margin:12px 0 20px;font-size:30px;line-height:1.15">Recebi seu pedido de diagnóstico</h1>
-        <p style="margin:0;color:#d9d5d1">Olá, ${escapeHtml(firstName)}!</p>
-      </div>
-      <div style="padding:30px 34px;border:1px solid #ece7e1;border-top:0;border-radius:0 0 20px 20px">
-        <p style="margin-top:0">Recebi seus dados e vou analisar o seu perfil com atenção.</p>
-        <p>Você terá um retorno em até <strong>48 horas úteis</strong>.</p>
-        <p>Se precisar complementar alguma informação, basta responder a este e-mail.</p>
-        <p style="margin-bottom:0">Até breve,<br><strong>${SENDER_NAME}</strong></p>
-      </div>
-    </div>`;
-
-  MailApp.sendEmail({
-    to: lead.email,
-    replyTo: REPLY_TO_EMAIL,
-    name: SENDER_NAME,
-    subject: clientSubject,
-    body: clientText,
-    htmlBody: clientHtml
-  });
+  MailApp.sendEmail(lead.email, clientSubject, clientText);
 }
 
 function emailField(label, value) {
