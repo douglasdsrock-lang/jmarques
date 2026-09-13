@@ -172,7 +172,7 @@ function sendLeadEmails(lead) {
     SENDER_NAME
   ].join('\n');
 
-  GmailApp.sendEmail(lead.email, clientSubject, clientText);
+  GmailApp.createDraft(lead.email, clientSubject, clientText).send();
 }
 
 function emailField(label, value) {
